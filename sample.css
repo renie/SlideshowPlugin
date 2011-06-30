@@ -14,3 +14,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+@charset "UTF-8";
+* { margin: 0; padding: 0; }
+#wrapper { width: 600px; margin: 0 auto; overflow: hidden; }
+#slideshow { width: 800px; height: 450px; }
+	#slideshow ul{ display: block; }
+	#slideshow ul li { float: left;  display: block; list-style: none;  width: 600px; height: 450px; }

@@ -21,11 +21,26 @@
 	<meta name="description" content="This is just a plugin sample page" />
 	<meta name="author" content="Renie Siqueira da Silva" />
 	<title>Plugin Sample</title>
+	<link rel="stylesheet" href="sample.css" type="text/css" media="all" /> 
 </head>
 <body>
 	<div id="wrapper">
-
-	</div>		
+		<div id="slideshow">
+			<ul>
+				<li><a href="#"><img src="./images/jolie.jpg"/></a></li>
+				<li><a href="#"><img src="./images/scarlett.jpg"/></a></li>
+				<li><a href="#"><img src="./images/jessica.jpg"/></a></li>
+				<li><a href="#"><img src="./images/jeniffer.jpg"/></a></li>			
+			</ul>
+		</div>
+	</div>
+	<script type='text/javascript' src="./jquery-1.6.1.min.js"></script>
+	<script type='text/javascript' src="./slideshow.js"></script>
+	<script type='text/javascript'>
+		$(document).ready(function(){
+			$("#slideshow").slideshow();
+		});
+	</script>	
 </body>
 </html>
 

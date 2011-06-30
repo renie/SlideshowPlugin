@@ -14,3 +14,25 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+(function($){  
+	$.fn.slideshow = function(options) {  
+		
+		var itemWidth = this.find('ul li').first().width();
+		var widthSlider = this.find('ul li').length * itemWidth;
+		
+		this.find('ul').css('width', widthSlider);
+		this.find('ul li').delegate('a', 'click', function(){
+			if($(this).parent().is(':last-child')){
+				$(this).parent().parent().animate({
+													marginLeft: 0
+												  }, 1500 );
+			}else{
+				$(this).parent().parent().animate({
+													marginLeft: "-="+itemWidth
+												  }, 1500 );
+			}
+			return false;	
+		});
+		
+	};  
+})(jQuery);
