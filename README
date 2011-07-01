@@ -37,3 +37,58 @@ PS. The copy of the GNU Affero General Public License is on AGPL.txt
 
 OBS. A cópia da GNU Affero General Public License está no AGPL.txt 
 (somente em inglês, traduções da AGPL não são oficiais)
+
+
+
+
+
+/------------------------------------------------------/
+/------------------------------------------------------/
+
+/------------------------------------------------------/
+USE INSTRUCTIONS
+
+Create an unordered list e put one image in each item list.
+This unordered list must be wrapped by some "block element" (preferably a DIV element)
+On javascript, call the slideshow function to that wrapper. Like this:
+
+$('#idMyDiv').slideshow();
+
+The following parameters are allowed:
+
+itemWidth
+itemHeight
+widthSlider
+transitionSpeed
+pauseTime
+effect( 2 options for now: horizontalSlide and fade )
+
+--Warnings--
+
+NO CSS IS REQUIRED
+JQUERY IS REQUIRED
+IT WASN'T TESTED ON INTERNET EXPLORER
+
+/------------------------------------------------------/
+INSTRUÇÕES DE USO
+
+Crie uma lista não ordenada e coloco uma imagem em cada item desta lista.
+Essa lista precisa estar dentro de um elemente do tipo 'block(preferencialmente uma DIV)
+No javascript, chame a função slideshow no elemento q envolve a lista. Desta forma:
+
+$('#idMyDiv').slideshow();
+
+Os seguintes parâmetros são permitidos:
+
+itemWidth
+itemHeight
+widthSlider
+transitionSpeed
+pauseTime
+effect( 2 opções por enquanto: horizontalSlide e fade )
+
+--Avisos--
+
+NENHUM CSS É NECESSÁRIO
+JQUERY É NECESSÁRIO
+NÃO FOI TESTADO NO INTERNET EXPLORER
