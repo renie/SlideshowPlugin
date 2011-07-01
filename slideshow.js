@@ -42,7 +42,7 @@
 			transitionSpeed: 1500,
 			pauseTime: 3000,
 			effect: 'fade',
-			navBar: true
+			navigation: true
 		}
 
 		var _this = jQuery.extend(defaults, options);
@@ -114,7 +114,7 @@
 		 *This function starts an auto plugin animation
 		 **/
 		function start(){
-			if(_this.navBar)
+			if(_this.navigation)
 				createNavBar();
 				
 			_currentItem = _firstItem;
