@@ -41,7 +41,8 @@
 			widthSlider: _itemCollection.length * _firstItem.find('img').width(),
 			transitionSpeed: 1500,
 			pauseTime: 3000,
-			effect: 'fade'
+			effect: 'fade',
+			navBar: true
 		}
 
 		var _this = jQuery.extend(defaults, options);
@@ -58,14 +59,14 @@
 		function init(el){
 			_element = el;
 			_element.css({visibility: 'hidden', overflow: 'hidden'});
-			_itemCollectionParent	= _element.find('ul')
+			_itemCollectionParent	= _element.find('ul');
 			_itemCollection 		= _itemCollectionParent.find('li');
 			_itemCollectionLength	= _itemCollection.length - 1;
 			_firstItem				= _itemCollection.first();
 			_lastItem				= _itemCollection.last();
 			_effects 				= {horizontalSlide: hSlide, fade: fade};
 			_prepareEffects 		= {horizontalSlide: hSlidePrepare, fade: fadePrepare};
-				
+			_navEffects 			= {horizontalSlide: hSlideNav, fade: fadeNav};		
 		}
 		
 		/**
@@ -113,6 +114,9 @@
 		 *This function starts an auto plugin animation
 		 **/
 		function start(){
+			if(_this.navBar)
+				createNavBar();
+				
 			_currentItem = _firstItem;
 			_tmpFn = _effects[_this.effect];
 			_element.css({visibility: 'visible'})
@@ -124,6 +128,14 @@
 		 **/
 		function stop(){
 			clearInterval(_timeCounter);		
+		}
+		
+		
+		/**
+		 *This function restarts the animation
+		 **/
+		function restart(){
+			_timeCounter = setInterval(logicalSequenceAnimation,_this.pauseTime);		
 		}
 		
 		/**
@@ -161,5 +173,93 @@
 				_currentItem.next().animate({opacity: 1, zIndex: 0 }, _this.transitionSpeed / 2 );
 			
 		}
+		
+		/**
+		 *Create navbar
+		 **/
+		function createNavBar(){
+			var bar = document.createElement('div');
+			var nav = document.createElement('ul');
+			var setItemPosition;
+			i=0;
+			while(i<=_itemCollectionLength){
+				item = document.createElement('li');
+				jQuery(item).css({listStyle: 'none', display: 'block', float: 'left', margin: '5px'})
+				link = document.createElement('a');
+				jQuery(link).attr('href','#');	
+				jQuery(link).html(i+1);
+				jQuery(item).append(link);
+				jQuery(nav).append(item);
+				item = null;
+				link = null;
+				i++;
+			}
+			
+			jQuery(nav).find('li a').each(function(){
+				
+				jQuery(this).bind('click', function(){
+					index = parseInt(jQuery(this).text())-1;
+					_navEffects[_this.effect](index);
+					_currentItem = _itemCollectionParent.find("li:eq("+index+")");
+					stop();
+					restart();
+					return false;
+				});
+			});
+			
+			jQuery(nav).css({zIndex: _itemCollectionLength, position: 'absolute'});
+			_element.append(nav);
+			
+			
+		}
+		
+		/**
+		 *Effects nav functions
+		 **/
+		function hSlideNav(index){
+			setItemPosition = -1*(_this.itemWidth * index);					
+			_itemCollectionParent.animate({marginLeft: setItemPosition}, _this.transitionSpeed );
+		}
+		
+		function fadeNav(index){
+			_currentItem.animate({opacity: 0, zIndex: -9999 }, _this.transitionSpeed / 2 );	
+			_itemCollectionParent.find("li:eq("+index+")").animate({opacity: 1, zIndex: 0 }, _this.transitionSpeed / 2 );
+		}
 	};  
 })(jQuery);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

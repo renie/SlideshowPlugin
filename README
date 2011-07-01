@@ -62,6 +62,7 @@ widthSlider
 transitionSpeed
 pauseTime
 effect( 2 options for now: horizontalSlide and fade )
+*UPDATE navBar (true or false)
 
 --Warnings--
 
@@ -86,6 +87,7 @@ widthSlider
 transitionSpeed
 pauseTime
 effect( 2 opções por enquanto: horizontalSlide e fade )
+*Atualização navBar (true ou false)
 
 --Avisos--
 
