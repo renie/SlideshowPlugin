@@ -62,13 +62,57 @@ widthSlider
 transitionSpeed
 pauseTime
 effect( 2 options for now: horizontalSlide and fade )
-*UPDATE navBar (true or false)
+*UPDATE 
+	navBar (true or false)
+*UPDATE2
+	navigationGapItem
+	navigationItemFontSize
+	navigationItemFontFamily
+	navigationItemFontWeight
+	navigationItemHeight
+	navigationItemWidth
+	navigationItemBorderSize
+	navigationItemBorderStyle
+	navigationItemBorderColor
+	navigationItemBorderRadius
+	navigationItemBackgroundColor
+	navigationItemTextColor
+	navigationHoverItemBorderColor
+	navigationHoverItemBackgroundColor
+	navigationHoverItemTextColor
 
 --Warnings--
 
 NO CSS IS REQUIRED
 JQUERY IS REQUIRED
-IT WASN'T TESTED ON INTERNET EXPLORER
+IT WASN'T TESTED ON INTERNET EXPLORER ( and probably won't be )
+
+--Plugin Patterns--
+If you won't pass any param to plugin, it'll use default ones. This is the pattern:
+
+itemWidth: [width of your image]
+itemHeight: [height of your images]
+widthSlider: [width of your images multiplied by number of images]
+transitionSpeed: 1500
+pauseTime: 3000
+effect: 'fade'
+navigation: true
+navigationGapItem: '5px'
+navigationItemFontSize: '16px'
+navigationItemFontFamily: 'Helvetica'
+navigationItemFontWeight: 'bold'
+navigationItemHeight: '30px'
+navigationItemWidth: '30px'
+navigationItemBorderSize: '1px'
+navigationItemBorderStyle: 'solid'
+navigationItemBorderColor: '#666'
+navigationItemBorderRadius: '5px'
+navigationItemBackgroundColor: '#fff'
+navigationItemTextColor: '#000'
+navigationHoverItemBorderColor: '#dedede'
+navigationHoverItemBackgroundColor: '#666'
+navigationHoverItemTextColor: '#dedede'
+
 
 /------------------------------------------------------/
 INSTRUÇÕES DE USO
@@ -87,10 +131,53 @@ widthSlider
 transitionSpeed
 pauseTime
 effect( 2 opções por enquanto: horizontalSlide e fade )
-*Atualização navBar (true ou false)
+*ATUALIZAÇÃO 
+	navBar (true ou false)
+*ATUALIZAÇÃO2
+	navigationGapItem
+	navigationItemFontSize
+	navigationItemFontFamily
+	navigationItemFontWeight
+	navigationItemHeight
+	navigationItemWidth
+	navigationItemBorderSize
+	navigationItemBorderStyle
+	navigationItemBorderColor
+	navigationItemBorderRadius
+	navigationItemBackgroundColor
+	navigationItemTextColor
+	navigationHoverItemBorderColor
+	navigationHoverItemBackgroundColor
+	navigationHoverItemTextColor
 
 --Avisos--
 
 NENHUM CSS É NECESSÁRIO
 JQUERY É NECESSÁRIO
-NÃO FOI TESTADO NO INTERNET EXPLORER
+NÃO FOI TESTADO NO INTERNET EXPLORER( e provavelmente não será )
+
+--Padrões do Plugin--
+Se você não passar parâmetros para o plugin, ele usará valores padrão. Este é o padrão:
+
+itemWidth: [largura das suas imagens]
+itemHeight: [altura das suas imagens]
+widthSlider: [largura das suas imagens multiplicado pelo número de imagens]
+transitionSpeed: 1500
+pauseTime: 3000
+effect: 'fade'
+navigation: true
+navigationGapItem: '5px'
+navigationItemFontSize: '16px'
+navigationItemFontFamily: 'Helvetica'
+navigationItemFontWeight: 'bold'
+navigationItemHeight: '30px'
+navigationItemWidth: '30px'
+navigationItemBorderSize: '1px'
+navigationItemBorderStyle: 'solid'
+navigationItemBorderColor: '#666'
+navigationItemBorderRadius: '5px'
+navigationItemBackgroundColor: '#fff'
+navigationItemTextColor: '#000'
+navigationHoverItemBorderColor: '#dedede'
+navigationHoverItemBackgroundColor: '#666'
+navigationHoverItemTextColor: '#dedede'

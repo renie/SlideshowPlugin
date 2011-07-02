@@ -30,6 +30,11 @@
 		var _tmpFn;
 		var _target;
 		var _effects;
+		var _navigationbar;
+		var _itemNavigationCollection;
+		var _itemNavigationCollectionLength;
+		var _navFirstItem;
+		var _navCurrentItem;
 		
 		/*Call a 'fake constructor' */
 		init(this);
@@ -42,7 +47,22 @@
 			transitionSpeed: 1500,
 			pauseTime: 3000,
 			effect: 'fade',
-			navigation: true
+			navigation: true,
+			navigationGapItem: '5px',
+			navigationItemFontSize: '16px',
+			navigationItemFontFamily: 'Helvetica',
+			navigationItemFontWeight: 'bold',
+			navigationItemHeight: '30px',
+			navigationItemWidth: '30px',
+			navigationItemBorderSize: '1px',
+			navigationItemBorderStyle: 'solid',
+			navigationItemBorderColor: '#666',
+			navigationItemBorderRadius: '5px',
+			navigationItemBackgroundColor: '#fff',
+			navigationItemTextColor: '#000',
+			navigationHoverItemBorderColor: '#dedede',
+			navigationHoverItemBackgroundColor: '#666',
+			navigationHoverItemTextColor: '#dedede'
 		}
 
 		var _this = jQuery.extend(defaults, options);
@@ -118,9 +138,14 @@
 				createNavBar();
 				
 			_currentItem = _firstItem;
+			if(_this.navigation){
+				_navFirstItem = jQuery(_navigationbar).find("ul li:first").find('a');
+				setCurrentNavItem(_navFirstItem, true);
+			}
 			_tmpFn = _effects[_this.effect];
-			_element.css({visibility: 'visible'})
-			_timeCounter = setInterval(logicalSequenceAnimation,_this.pauseTime);		
+			_element.css({visibility: 'visible'});
+			_timeCounter = setInterval(logicalSequenceAnimation,_this.pauseTime);
+			setTimeout(resetTimer,60000);	
 		}
 		
 		/**
@@ -130,7 +155,6 @@
 			clearInterval(_timeCounter);		
 		}
 		
-		
 		/**
 		 *This function restarts the animation
 		 **/
@@ -139,16 +163,33 @@
 		}
 		
 		/**
+		 *This function stop ans restart the animation
+		 **/
+		function resetTimer(){
+			stop();
+			restart();
+			setTimeout(resetTimer,60000);
+			console.log('reset()');
+		}
+		
+		/**
 		 *Here is the animation logic
 		 **/
 		function logicalSequenceAnimation(){
 			if( _currentItem.get(0) == _lastItem.get(0) ){				
-				_tmpFn(true)
+				_tmpFn(true);
 				_currentItem = _firstItem;
+				if(_this.navigation)
+					_navCurrentItem = _navFirstItem;
 			}else{
 				_tmpFn(false);
 				_currentItem = _currentItem.next();
+				if(_this.navigation)
+					_navCurrentItem = _navCurrentItem.parent().next().find('a');
 			}
+			
+			if(_this.navigation)
+				setCurrentNavItem(_navCurrentItem, true);
 		}
 		
 		/**
@@ -178,16 +219,21 @@
 		 *Create navbar
 		 **/
 		function createNavBar(){
-			var bar = document.createElement('div');
+			_navigationbar = document.createElement('div');
 			var nav = document.createElement('ul');
 			var setItemPosition;
 			i=0;
+			
 			while(i<=_itemCollectionLength){
 				item = document.createElement('li');
-				jQuery(item).css({listStyle: 'none', display: 'block', float: 'left', margin: '5px'})
+				jQuery(item).css({listStyle: 'none', display: 'block', float: 'left', margin: _this.navigationGapItem, textAlign: 'center'});
 				link = document.createElement('a');
-				jQuery(link).attr('href','#');	
-				jQuery(link).html(i+1);
+				link = jQuery(link);
+				link.attr('href','#');	
+				link.css({textDecoration: 'none', display: 'block', background: _this.navigationItemBackgroundColor, borderRadius: _this.navigationItemBorderRadius, border: _this.navigationItemBorderSize +' '+_this.navigationItemBorderStyle +' '+_this.navigationHoverItemBorderColor, color: _this.navigationItemTextColor, width: _this.navigationItemWidth, height: _this.navigationItemHeight, font: _this.navigationItemFontWeight+' '+_this.navigationItemFontSize+'/'+_this.navigationItemHeight+' '+_this.navigationItemFontFamily});
+				link.bind('mouseover', function(){setStyleNavItem(jQuery(this), true)});
+				link.bind('mouseout', function(){setStyleNavItem(jQuery(this), false)});
+				link.html(i+1);
 				jQuery(item).append(link);
 				jQuery(nav).append(item);
 				item = null;
@@ -198,6 +244,9 @@
 			jQuery(nav).find('li a').each(function(){
 				
 				jQuery(this).bind('click', function(){
+					
+					setCurrentNavItem(jQuery(this), true);
+					
 					index = parseInt(jQuery(this).text())-1;
 					_navEffects[_this.effect](index);
 					_currentItem = _itemCollectionParent.find("li:eq("+index+")");
@@ -207,10 +256,36 @@
 				});
 			});
 			
-			jQuery(nav).css({zIndex: _itemCollectionLength, position: 'absolute'});
-			_element.append(nav);
+			jQuery(nav).css({zIndex: _itemCollectionLength, position: 'absolute', margin: "-20px 0", display: 'block' });
+			ml = (_element.width()/2) - ((40*_itemCollectionLength)/2);
+			jQuery(nav).css({marginLeft: ml});
+			jQuery(_navigationbar).append(nav);
+			_element.append(_navigationbar);
+			_itemNavigationCollection = jQuery(_navigationbar).find('ul li');
+			_itemNavigationCollectionLength = _itemNavigationCollection.length;
+		}
+		
+		function setCurrentNavItem(el, state){
 			
+			_itemNavigationCollection.find('a').each(function(){
+						jQuery(this).removeClass('active');
+						setStyleNavItem(jQuery(this), false);
+					});
+			jQuery(el).addClass('active');
 			
+			if(state || jQuery(el).hasClass('active'))
+				jQuery(el).css({ background: _this.navigationHoverItemBackgroundColor, border: _this.navigationItemBorderSize +' '+_this.navigationItemBorderStyle +' '+_this.navigationHoverItemBorderColor, color: _this.navigationHoverItemTextColor});
+			else
+				jQuery(el).css({ background: _this.navigationItemBackgroundColor, border: _this.navigationItemBorderSize +' '+_this.navigationItemBorderStyle +' '+_this.navigationItemBorderColor, color: _this.navigationItemTextColor});
+		
+			_navCurrentItem = jQuery(el);
+		}
+		
+		function setStyleNavItem(el, state){
+			if(state || jQuery(el).hasClass('active'))
+				jQuery(el).css({ background: _this.navigationHoverItemBackgroundColor, border: _this.navigationItemBorderSize +' '+_this.navigationItemBorderStyle +' '+_this.navigationHoverItemBorderColor, color: _this.navigationHoverItemTextColor});
+			else
+				jQuery(el).css({ background: _this.navigationItemBackgroundColor, border: _this.navigationItemBorderSize +' '+_this.navigationItemBorderStyle +' '+_this.navigationItemBorderColor, color: _this.navigationItemTextColor});
 		}
 		
 		/**
@@ -225,41 +300,6 @@
 			_currentItem.animate({opacity: 0, zIndex: -9999 }, _this.transitionSpeed / 2 );	
 			_itemCollectionParent.find("li:eq("+index+")").animate({opacity: 1, zIndex: 0 }, _this.transitionSpeed / 2 );
 		}
-	};  
+	}; 
+	
 })(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
